@@ -59,7 +59,7 @@ time.sleep(3)
 
 
 button_start = 0
-button_end   = 3
+button_end   = 20
 brands = []
 product_descriptions = []
 prices = []
@@ -81,49 +81,55 @@ for getdata in range(button_start,button_end):
     time.sleep(3)
     pri = driver.find_elements(By.XPATH, "//div[@class='_30jeq3']")
     time.sleep(3)
+    
+    if len(brand_name) > 0:
      
-    for br  in brand_name:
-        brands.append(br.text)
+        for br  in brand_name:
+            brands.append(br.text)
 
-    for de  in des:
-        product_descriptions.append(de.text)
+        for de  in des:
+            product_descriptions.append(de.text)
 
-    for pr  in pri:
-        prices.append(pr.text)
+        for pr  in pri:
+            prices.append(pr.text)
+
+        time.sleep(2)
+
+        if len(brands) < 100:
+            # button_end += 1
+            next_btn = driver.find_element(By.XPATH, "//span[normalize-space()='Next']")
+            next_btn.click()
+            time.sleep(5)
+        else:
+            break
         
-    time.sleep(2)    
-
-    next_click = driver.find_element(By.XPATH, "//a[@class='_1LKTO3']")
-#     next_click = driver.find_element(By.XPATH, "/html/body/div/div/div[3]/div[1]/div[2]/div[12]/div/div/nav/a[12]")
-    next_click.click()
-    time.sleep(5)
+    else:
+        break   
         
 time.sleep(3)        
         
-len(brands) 
-button_end
 
 
-# In[11]:
+# In[7]:
 
 
 len(product_descriptions)
 
 
-# In[12]:
+# In[8]:
 
 
 len(prices)
 
 
-# In[14]:
+# In[9]:
 
 
 all_data = pd.DataFrame({'Brand':brands, 'Product Description':product_descriptions, 'Price':prices}).iloc[:100]
 all_data
 
 
-# In[15]:
+# In[10]:
 
 
 all_data.to_csv("100_Sunglasses_Listings_On_Flipkart.csv", header=False, index=False)
